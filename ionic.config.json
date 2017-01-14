@@ -1,0 +1,13 @@
+{
+  "name": "chatlover",
+  "app_id": "afbade65",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*",
+    "!www/**/*.map"
+  ]
+}

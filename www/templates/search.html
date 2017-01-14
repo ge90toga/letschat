@@ -1,0 +1,39 @@
+<ion-view title="Find Friends"
+          class="search" >
+	<ion-content >
+
+		<!-- Search Input Control -->
+		<div class="bar bar-header item-input-inset" >
+			<label class="item-input-wrapper" >
+				<i class="icon ion-ios-search placeholder-icon" ></i >
+				<input type="search"
+				       ng-model="search.username"
+				       placeholder="Search" >
+			</label >
+		</div >
+
+		<!-- Show List -->
+		<ion-list >
+			<!--<ion-item ng-repeat="show in filteredShows = (showService.shows | filter:search )"-->
+      <ion-item ng-repeat="user in us = (friendService.users| filter:search)"
+			          class="item-thumbnail-left"
+                ui-sref="app.show({'to_uid': user.uid})"
+                ng-if="userService.current.userId !== user.uid">
+				<div class="image"
+				     ng-style="{backgroundImage:'url(' + user.profilePic +')'}" >
+				</div >
+				<h2 >{{user.username}}</h2>
+        <!--<p class="last-text">{{user.uid}}</p>-->
+			</ion-item >
+
+			<!-- No Results Found Message -->
+			<div ng-show="us.length == 0" >
+				<p class="text-center" >No results found</p >
+			</div >
+
+
+		</ion-list >
+
+
+	</ion-content >
+</ion-view >

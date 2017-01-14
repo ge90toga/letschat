@@ -1,0 +1,12 @@
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
+.idea/
+node_modules/
+platforms/
+plugins/
+resources/android/
+resources/ios/
+config.xml
+#seems don't need if iniitialised from starter
+www/manifest.json
+www/service-worker.js
