@@ -54,6 +54,18 @@ ionic build android
 ionic emulate android
 ```
 ## Testing
-
+The project is currently under development of unit-testing. 
+To use unit testing, install the following package:
+```bash
+npm install karma karma-jasmine karma-phantomjs-launcher --save-dev
+npm install -g karma-cli
+npm install
+bower install angular-mocks --save-dev
+npm install jasmine-core --save-dev
+```
+To run test, execute:
+```bash
+karma start tests/test.conf.js
+```
 
 ## Firebase
