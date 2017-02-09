@@ -6,7 +6,7 @@
  *
  * AngularFire 0.0.0
  * https://github.com/firebase/angularfire/
- * Date: 12/21/2016
+ * Date: 01/23/2017
  * License: MIT
  */
 (function(exports) {
@@ -16,10 +16,17 @@
   angular.module("firebase.config", []);
   angular.module("firebase.auth", ["firebase.utils"]);
   angular.module("firebase.database", ["firebase.utils"]);
+  angular.module("firebase.storage", ["firebase.utils"]);
 
   // Define the `firebase` module under which all AngularFire
   // services will live.
-  angular.module("firebase", ["firebase.utils", "firebase.config", "firebase.auth", "firebase.database"])
+  angular.module("firebase", [
+    "firebase.utils",
+    "firebase.config",
+    "firebase.auth",
+    "firebase.database",
+    "firebase.storage"
+  ])
     //TODO: use $window
     .value("Firebase", exports.firebase)
     .value("firebase", exports.firebase);
@@ -1881,6 +1888,189 @@ if ( typeof Object.getPrototypeOf !== "function" ) {
     };
   }
 }
+
+(function() {
+  "use strict";
+
+  /**
+   * Take an UploadTask and create an interface for the user to monitor the
+   * file's upload. The $progress, $error, and $complete methods are provided
+   * to work with the $digest cycle.
+   *
+   * @param task
+   * @param $firebaseUtils
+   * @returns A converted task, which contains methods for monitoring the
+   * upload progress.
+   */
+  function _convertTask(task, $firebaseUtils) {
+    return {
+      $progress: function $progress(callback) {
+        task.on('state_changed', function () {
+          $firebaseUtils.compile(function () {
+            callback(_unwrapStorageSnapshot(task.snapshot));
+          });
+        });
+      },
+      $error: function $error(callback) {
+        task.on('state_changed', null, function (err) {
+          $firebaseUtils.compile(function () {
+            callback(err);
+          });
+        });
+      },
+      $complete: function $complete(callback) {
+        task.on('state_changed', null, null, function () {
+          $firebaseUtils.compile(function () {
+            callback(_unwrapStorageSnapshot(task.snapshot));
+          });
+        });
+      },
+      $cancel: task.cancel,
+      $resume: task.resume,
+      $pause: task.pause,
+      then: task.then,
+      catch: task.catch,
+      $snapshot: task.snapshot
+    };
+  }
+
+  /**
+   * Take an Firebase Storage snapshot and unwrap only the needed properties.
+   *
+   * @param snapshot
+   * @returns An object containing the unwrapped values.
+   */
+  function _unwrapStorageSnapshot(storageSnapshot) {
+    return {
+      bytesTransferred: storageSnapshot.bytesTransferred,
+      downloadURL: storageSnapshot.downloadURL,
+      metadata: storageSnapshot.metadata,
+      ref: storageSnapshot.ref,
+      state: storageSnapshot.state,
+      task: storageSnapshot.task,
+      totalBytes: storageSnapshot.totalBytes
+    };
+  }
+
+  /**
+   * Determines if the value passed in is a Firebase Storage Reference. The
+   * put method is used for the check.
+   *
+   * @param value
+   * @returns A boolean that indicates if the value is a Firebase Storage
+   * Reference.
+   */
+  function _isStorageRef(value) {
+    value = value || {};
+    return typeof value.put === 'function';
+  }
+
+  /**
+   * Checks if the parameter is a Firebase Storage Reference, and throws an
+   * error if it is not.
+   *
+   * @param storageRef
+   */
+  function _assertStorageRef(storageRef) {
+    if (!_isStorageRef(storageRef)) {
+      throw new Error('$firebaseStorage expects a Storage reference');
+    }
+  }
+
+  /**
+   * This constructor should probably never be called manually. It is setup
+   * for dependecy injection of the $firebaseUtils and $q service.
+   *
+   * @param {Object} $firebaseUtils
+   * @param {Object} $q
+   * @returns {Object}
+   * @constructor
+   */
+  function FirebaseStorage($firebaseUtils, $q) {
+
+    /**
+     * This inner constructor `Storage` allows for exporting of private methods
+     * like _assertStorageRef, _isStorageRef, _convertTask, and _unwrapStorageSnapshot.
+     */
+    var Storage = function Storage(storageRef) {
+      _assertStorageRef(storageRef);
+      return {
+        $put: function $put(file, metadata) {
+          var task = storageRef.put(file, metadata);
+          return _convertTask(task, $firebaseUtils);
+        },
+        $putString: function $putString(data, format, metadata) {
+          var task = storageRef.putString(data, format, metadata);
+          return _convertTask(task, $firebaseUtils);
+        },
+        $getDownloadURL: function $getDownloadURL() {
+          return $q.when(storageRef.getDownloadURL());
+        },
+        $delete: function $delete() {
+          return $q.when(storageRef.delete());
+        },
+        $getMetadata: function $getMetadata() {
+          return $q.when(storageRef.getMetadata());
+        },
+        $updateMetadata: function $updateMetadata(object) {
+          return $q.when(storageRef.updateMetadata(object));
+        },
+        $toString: function $toString() {
+          return storageRef.toString();
+        }
+      };
+    };
+
+    Storage.utils = {
+      _unwrapStorageSnapshot: _unwrapStorageSnapshot,
+      _isStorageRef: _isStorageRef,
+      _assertStorageRef: _assertStorageRef
+    };
+
+    return Storage;
+  }
+
+  /**
+   * Creates a wrapper for the firebase.storage() object. This factory allows
+   * you to upload files and monitor their progress and the callbacks are
+   * wrapped in the $digest cycle.
+   */
+  angular.module('firebase.storage')
+    .factory('$firebaseStorage', ["$firebaseUtils", "$q", FirebaseStorage]);
+
+})();
+
+/* istanbul ignore next */
+(function () {
+  "use strict";
+
+  function FirebaseStorageDirective($firebaseStorage, firebase) {
+    return {
+      restrict: 'A',
+      priority: 99, // run after the attributes are interpolated
+      scope: {},
+      link: function (scope, element, attrs) {
+        // $observe is like $watch but it waits for interpolation
+        // any value passed as an attribute is converted to a string
+        // if null or undefined is passed, it is converted to an empty string
+        // Ex: <img firebase-src="{{ myUrl }}"/>
+        attrs.$observe('firebaseSrc', function (newFirebaseSrcVal) {
+          if (newFirebaseSrcVal !== '') {
+            var storageRef = firebase.storage().ref(newFirebaseSrcVal);
+            var storage = $firebaseStorage(storageRef);
+            storage.$getDownloadURL().then(function getDownloadURL(url) {
+              element[0].src = url;
+            });
+          }
+        });
+      }
+    };
+  }
+  FirebaseStorageDirective.$inject = ['$firebaseStorage', 'firebase'];
+
+  angular.module('firebase.storage')
+    .directive('firebaseSrc', FirebaseStorageDirective);
+})();
 
 (function() {
   'use strict';
