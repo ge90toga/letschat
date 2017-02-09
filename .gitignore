@@ -7,6 +7,7 @@ plugins/
 resources/android/
 resources/ios/
 
+
 #seems don't need if iniitialised from starter
 www/manifest.json
 www/service-worker.js

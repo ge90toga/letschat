@@ -1,4 +1,4 @@
-var mod = angular.module('tvchat.filters.favorites', []);
+var mod = angular.module('chatlover.filters.favorites', []);
 
 mod.filter('sortByName', function() {
   return function(input) {

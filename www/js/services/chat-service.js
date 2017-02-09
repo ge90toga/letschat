@@ -1,4 +1,4 @@
-var app = angular.module('tvchat.services.chatService', []);
+var app = angular.module('chatlover.services.chatService', []);
 /**
  * ChatService
  * Should call ChatService.destroy() when leave a conversation!

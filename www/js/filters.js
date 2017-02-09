@@ -1,3 +1,3 @@
-var mod = angular.module('tvchat.filters', [
-	'tvchat.filters.favorites'
+var mod = angular.module('chatlover.filters', [
+	'chatlover.filters.favorites'
 ]);

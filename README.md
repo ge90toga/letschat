@@ -30,8 +30,6 @@ cd YOURAPPNAME
 npm install
 bower install
 ionic state restore --plugins
-ionic platform add ios // if you wish to add ios platfore (mac only)
-ionic platform add android // if you wish to add android platform (mac only)
 ```
 
 ## Run
@@ -42,6 +40,7 @@ ionic serve -c
 
 For iOS:
 ```bash
+ionic platform remove ios // remove the platform if you have compile issue
 ionic platform add ios
 ionic build ios
 ionic emulate ios
@@ -49,6 +48,7 @@ ionic emulate ios
 
 For Android:
 ```bash
+ionic platform remove android
 ionic platform add android
 ionic build android
 ionic emulate android

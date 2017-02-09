@@ -1,4 +1,4 @@
-var mod = angular.module('tvchat.controllers.intro', []);
+var mod = angular.module('chatlover.controllers.intro', []);
 
 mod.controller('IntroCtrl', function ($scope, $state, UserService) {
 

@@ -1,6 +1,6 @@
-var mod = angular.module('tvchat.services', [
-	'tvchat.utils',
-	'tvchat.services.userService',
-  'tvchat.services.friendService',
-  'tvchat.services.chatService'
+var mod = angular.module('chatlover.services', [
+	'chatlover.utils',
+	'chatlover.services.userService',
+  'chatlover.services.friendService',
+  'chatlover.services.chatService'
 ]);

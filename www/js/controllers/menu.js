@@ -1,4 +1,4 @@
-var mod = angular.module('tvchat.controllers.menu', []);
+var mod = angular.module('chatlover.controllers.menu', []);
 
 mod.controller('MenuCtrl', function($scope, $state, UserService) {
 

@@ -1,5 +1,5 @@
 // friend service
-var app = angular.module('tvchat.services.friendService', []);
+var app = angular.module('chatlover.services.friendService', []);
 
 app.service('FriendService', function ($firebaseArray, $rootScope) {
 

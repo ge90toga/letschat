@@ -1,4 +1,4 @@
-var app = angular.module('tvchat.utils', []);
+var app = angular.module('chatlover.utils', []);
 
 app.factory('$localstorage', ['$window', function($window) {
   return {
