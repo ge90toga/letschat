@@ -1,4 +1,4 @@
-var mod = angular.module('tvchat.controllers.show', []);
+var mod = angular.module('chatlover.controllers.show', []);
 
 mod.controller('ShowCtrl', function ($scope, $rootScope, $state, $stateParams, $timeout, $ionicScrollDelegate, UserService, ChatService) {
 
@@ -52,8 +52,6 @@ mod.controller('ShowCtrl', function ($scope, $rootScope, $state, $stateParams, $
   //     $ionicScrollDelegate.$getByHandle('show-page').scrollBottom(true);
   //   }
   // });
-
-
 
 
 });

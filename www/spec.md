@@ -2,7 +2,7 @@
 
 ### Login
 - be able to sign up and login via email and password.
-- be able to login via facebook (optional).
+- be able to login via facebook.
 
 ### Search
 - be able to search friend. 

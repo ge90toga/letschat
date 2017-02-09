@@ -1,13 +1,13 @@
-var app = angular.module('tvchat', [
+var app = angular.module('chatlover', [
 	'ionic',
 	'ngCordova',
 	'ngOpenFB',
 	'firebase',
 	'angularMoment',
-	'tvchat.controllers',
-	'tvchat.services',
-	'tvchat.filters',
-	'tvchat.utils'
+	'chatlover.controllers',
+	'chatlover.services',
+	'chatlover.filters',
+	'chatlover.utils'
 ]);
 
 

@@ -1,6 +1,6 @@
-var app = angular.module('tvchat.controllers.search', []);
+var mod = angular.module('chatlover.controllers.search', []);
 
-app.controller('SearchCtrl', function ($scope, $state, $stateParams, $ionicListDelegate, UserService, FriendService) {
+mod.controller('SearchCtrl', function ($scope, $state, $stateParams, $ionicListDelegate, UserService, FriendService) {
 
 
   $scope.friendService = FriendService;

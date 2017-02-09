@@ -1,6 +1,6 @@
-var mod = angular.module('tvchat.controllers', [
-	'tvchat.controllers.intro',
-	'tvchat.controllers.menu',
-	'tvchat.controllers.search',
-	'tvchat.controllers.show'
+var mod = angular.module('chatlover.controllers', [
+	'chatlover.controllers.intro',
+	'chatlover.controllers.menu',
+	'chatlover.controllers.search',
+	'chatlover.controllers.show'
 ]);

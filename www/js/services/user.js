@@ -1,4 +1,4 @@
-var app = angular.module('tvchat.services.userService', []);
+var app = angular.module('chatlover.services.userService', []);
 
 
 app.service('UserService', function ($q, $rootScope, $localstorage, $ionicPopup, ngFB, $firebaseAuth, $firebaseArray,FriendService) {
