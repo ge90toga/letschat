@@ -10,12 +10,10 @@ var app = angular.module('chatlover', [
 	'chatlover.utils'
 ]);
 
-
 app.constant("FACEBOOK_APP_ID", '1756173354703225');
 
 
 app.run(function ($rootScope, $ionicPlatform, $cordovaStatusbar) {
-
 
 		$ionicPlatform.ready(function () {
 
