@@ -112,11 +112,7 @@ app.service('UserService', function ($q, $rootScope, $localstorage, $ionicPopup,
 						// There was an error authenticating with facebook
 						// Show the user an error message
 						//
-						alert('Facebook login failed');
-						$ionicPopup.alert({
-							title: "Facebook Error",
-							template: 'Failed to login with facebook'
-						});
+						console.error('Facebook login failed');
 						d.reject(error);
 					}
 				});
