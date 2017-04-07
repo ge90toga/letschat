@@ -34,8 +34,6 @@ describe('Test Intro Controller', function () {
   });
 
 
-
-
   describe('#doLogin', function () {
 
     beforeEach(function () {
@@ -60,14 +58,5 @@ describe('Test Intro Controller', function () {
 
 
   });
-
-
-
-
-
-
-
-
-
 
 });

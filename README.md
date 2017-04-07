@@ -1,6 +1,8 @@
 This is an ionic project uses Firebase as real-time data service 
 with facebook login allowing users to enjoy one to one chat for personal tech learning and fun. 
 
+## Demo
+a short and not comprehensive demo of this app is available on https://youtu.be/GMK_SmUvBuc
 
 ## Specification
 
@@ -45,7 +47,8 @@ ionic platform add ios
 ionic build ios
 ionic emulate ios
 ```
-
+If you encounter errors in build, usually you can remove the platform and add, build again. Usually it will be solved.
+If not please raise an issue.
 For Android:
 ```bash
 ionic platform remove android
@@ -67,5 +70,6 @@ To run test, execute:
 ```bash
 karma start tests/test.conf.js
 ```
+## Facebook OpenFB Setup
 
-## Firebase
+## Firebase Setup
